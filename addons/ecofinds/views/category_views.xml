@@ -1,0 +1,10 @@
+<odoo>
+    <record id="ecofinds_category_action" model="ir.actions.act_window">
+        <field name="name">EcoFinds Categories</field>
+        <field name="res_model">ecofinds.product.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="ecofinds_menu_root" name="EcoFinds" sequence="10" web_icon="ecofinds,static/description/icon.png"/>
+    <menuitem id="ecofinds_category_menu" name="Categories" parent="ecofinds_menu_root" action="ecofinds_category_action" sequence="20"/>
+</odoo>

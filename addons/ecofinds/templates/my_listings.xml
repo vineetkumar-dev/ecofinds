@@ -1,0 +1,46 @@
+<odoo>
+    <template id="my_listings_page" name="My Listings">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container py-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h1>My Listings</h1>
+                        <a href="/my/listings/add" class="btn btn-primary">
+                            <i class="fa fa-plus"></i> Add New Product
+                        </a>
+                    </div>
+
+                    <div class="row">
+                        <t t-if="not products">
+                            <div class="col-12">
+                                <div class="alert alert-info" role="alert">
+                                    You haven't listed any products yet.
+                                </div>
+                            </div>
+                        </t>
+
+                        <div t-foreach="products" t-as="product" class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img t-attf-src="/web/image/product.template/#{product.id}/image_256" class="card-img-top" alt="Product Image"/>
+                                <div class="card-body">
+                                    <h5 class="card-title" t-esc="product.name"/>
+                                    <p class="card-text">
+                                        <strong>Price:</strong>
+                                        <span t-esc="product.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent border-top-0">
+                                    <a t-attf-href="/my/listings/edit/#{product.id}" class="btn btn-secondary btn-sm">Edit</a>
+                                    <form t-attf-action="/my/listings/delete/#{product.id}" method="post" class="d-inline">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this listing?');">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

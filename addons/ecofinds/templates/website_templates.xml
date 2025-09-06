@@ -1,0 +1,26 @@
+<odoo>
+    <template id="portal_my_home_menu_listings" name="Portal My Home: My Listings" inherit_id="portal.user_dropdown">
+        <xpath expr="//*[@id='o_logout_divider']" position="before">
+            <a href="/my/listings" role="menuitem" class="dropdown-item">My Listings</a>
+        </xpath>
+    </template>
+
+    <template id="ecofinds_shop_categories" name="EcoFinds Category Filter" inherit_id="website_sale.products_attributes">
+        <xpath expr="//div[@id='o_shop_collapse_category']" position="after">
+            <div class="card-body">
+                <h6 class="card-title">EcoFinds Categories</h6>
+                <form class="js_attributes" method="get">
+                    <ul class="nav nav-pills flex-column">
+                        <li t-foreach="ecofinds_categories" t-as="c">
+                            <label style="font-weight: normal; width: 100%;">
+                                <input type="radio" name="ecofinds_category" t-att-value="c.id" style="margin-right: 5px;"/>
+                                <span t-esc="c.name"/>
+                            </label>
+                        </li>
+                    </ul>
+                    <button type="submit" class="btn btn-primary btn-sm mt-2">Filter</button>
+                </form>
+            </div>
+        </xpath>
+    </template>
+</odoo>

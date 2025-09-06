@@ -1,0 +1,49 @@
+<odoo>
+    <template id="my_listing_form_page" name="Add/Edit Listing">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container py-4">
+                    <h1 t-if="product">Edit Listing: <t t-esc="product.name"/></h1>
+                    <h1 t-else="">Add New Product</h1>
+
+                    <form action="/my/listings/save" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input t-if="product" type="hidden" name="product_id" t-att-value="product.id"/>
+
+                        <div class="form-group">
+                            <label for="name">Product Title</label>
+                            <input type="text" class="form-control" name="name" required="1" t-att-value="product.name if product else ''"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="ecofinds_category_id">Category</label>
+                            <select name="ecofinds_category_id" class="form-control" required="1">
+                                <option value="">Select a category...</option>
+                                <t t-foreach="categories" t-as="cat">
+                                    <option t-att-value="cat.id" t-att-selected="product and product.ecofinds_category_id.id == cat.id">
+                                        <t t-esc="cat.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="list_price">Price</label>
+                            <input type="number" step="0.01" class="form-control" name="list_price" required="1" t-att-value="product.list_price if product else '0.00'"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="description_sale">Description</label>
+                            <textarea class="form-control" name="description_sale" rows="5" t-esc="product.description_sale if product else ''"></textarea>
+                        </div>
+                        <div class="form-group">
+                             <label for="image_1920">Image (Placeholder)</label>
+                             <input type="file" name="image_1920" class="form-control-file" accept="image/*"/>
+                             <small class="form-text text-muted">Upload a new image or leave blank to keep the existing one.</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary mt-3">Submit Listing</button>
+                        <a href="/my/listings" class="btn btn-secondary mt-3">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
